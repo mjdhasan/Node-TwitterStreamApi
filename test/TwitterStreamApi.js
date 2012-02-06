@@ -126,3 +126,12 @@ describe('TwitterStreamApi.ResponseProcessor', function() {
         });
     });
 });
+
+describe('TwitterStreamApi.filter ', function() {
+    it('Should require at least 1 filter predicate', function() {
+        assert.throws(function() {
+            var client = new TwitterStreamApi.Client({username: 'test', password: 'pass'});
+            client.filter({});
+        }, /at least one filter predicate is required \(track, follow or locations\)/);
+    });
+});
