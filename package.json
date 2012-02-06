@@ -1,0 +1,15 @@
+{
+  "author": "Ryan Horn <ryan.horn.web@gmail.com>",
+  "name": "TwitterStreamApi",
+  "description": "Twitter Streaming API client",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "index",
+  "engines": {
+    "node": ">= 0.6.8"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
