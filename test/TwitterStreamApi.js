@@ -100,4 +100,29 @@ describe('TwitterStreamApi.ResponseProcessor', function() {
             mockResp.emit('data', JSON.stringify(status) + '\r');
         });
     });
+
+    it('Should emit limit notices', function(done) {
+        var mockResp = new EventEmitter();
+        var emitter = new EventEmitter();
+
+        var mockStatuses = [
+            {text: 'Status 1'},
+            {limit: {track: 123}},
+            {text: 'Status 3'}
+        ];
+
+        var receivedStatuses = [];
+
+        var inc = 0;
+        emitter.on('limit', function(num) {
+            assert.equal(num, 123);
+            done();
+        });
+
+        var respProcessor = new TwitterStreamApi.ResponseProcessor(mockResp, emitter);
+
+        mockStatuses.forEach(function(status) {
+            mockResp.emit('data', JSON.stringify(status) + '\r');
+        });
+    });
 });
