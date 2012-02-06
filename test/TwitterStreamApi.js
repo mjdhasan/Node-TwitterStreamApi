@@ -125,6 +125,33 @@ describe('TwitterStreamApi.ResponseProcessor', function() {
             mockResp.emit('data', JSON.stringify(status) + '\r');
         });
     });
+
+    it('Should emit stall warnings', function(done) {
+        var mockResp = new EventEmitter();
+        var emitter = new EventEmitter();
+
+        var mockStatuses = [
+            {text: 'Status 1'},
+            {warning: {
+                code: 'test code'
+            }},
+            {text: 'Status 3'}
+        ];
+
+        var receivedStatuses = [];
+
+        var inc = 0;
+        emitter.on('stall_warning', function(warning) {
+            assert.equal(warning.code, 'test code');
+            done();
+        });
+
+        var respProcessor = new TwitterStreamApi.ResponseProcessor(mockResp, emitter);
+
+        mockStatuses.forEach(function(status) {
+            mockResp.emit('data', JSON.stringify(status) + '\r');
+        });
+    });
 });
 
 describe('TwitterStreamApi.filter ', function() {
